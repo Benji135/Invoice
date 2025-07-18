@@ -1,8 +1,11 @@
-import express from "express";
-import jwt from "jsonwebtoken";
-import User from "../models/admin.js"; // Make sure the path and filename match, and it has ES export
-
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const User = require("../models/admin"); // CommonJS require
 const router = express.Router();
+
+// Load env variables (in case not loaded globally)
+require("dotenv").config();
+
 const SECRET_KEY = process.env.JWT_SECRET;
 
 router.post("/login", async (req, res) => {
@@ -16,7 +19,7 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // NOTE: For production, use bcrypt to hash & compare passwords
+    // WARNING: Replace this with bcrypt in production
     if (password !== user.password) {
       console.log("Invalid password attempt");
       return res.status(401).json({ message: "Invalid credentials" });
@@ -28,6 +31,11 @@ router.post("/login", async (req, res) => {
       email: user.email,
     };
 
+    if (!SECRET_KEY) {
+      console.error("❌ JWT_SECRET is not defined in environment variables.");
+      return res.status(500).json({ message: "JWT secret not configured" });
+    }
+
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
 
     res.json({ token });
@@ -37,4 +45,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

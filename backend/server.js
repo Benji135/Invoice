@@ -1,12 +1,12 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import connectDB from "./config/db.js";
+const dotenv = require("dotenv");
+dotenv.config(); // Load environment variables
 
-import authRoutes from "./routes/auth.js"; // if you use it
-import registerCustomerRoutes from "./routes/customerRoute.js";
+const express = require("express");
+const cors = require("cors");
+const connectDB = require("./config/db");
 
-dotenv.config();
+const authRoutes = require("./routes/auth");
+const registerCustomerRoutes = require("./routes/customerRoute");
 
 const app = express();
 app.use(cors());
@@ -16,7 +16,7 @@ app.use(express.json());
 connectDB();
 
 // Routes
-app.use("/api", authRoutes); // Optional: remove if not used
+app.use("/api", authRoutes);
 app.use("/api", registerCustomerRoutes);
 
 // Start server

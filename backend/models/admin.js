@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+// models/admin.js
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   fullname: { type: String, required: true },
@@ -9,4 +10,4 @@ const userSchema = new mongoose.Schema({
 
 const Admin = mongoose.model("admin", userSchema);
 
-export default Admin;
+module.exports = Admin;

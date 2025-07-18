@@ -1,5 +1,5 @@
-import express from "express";
-import Customer from "../models/customer.js"; // Include .js for ES modules
+const express = require("express");
+const Customer = require("../models/customer"); // No .js needed with require
 
 const router = express.Router();
 
@@ -14,4 +14,4 @@ router.post("/register-customer", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
