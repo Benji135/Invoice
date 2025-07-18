@@ -34,7 +34,7 @@ function Home() {
     {
       icon: FaBoxes,
       image: '/images/inventory.webp',
-      title: 'Inventory Management',
+      title: 'List of Items',
       description: 'Keep track of your stock levels and inventory movement.',
       path: '/inventory',
     },
