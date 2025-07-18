@@ -119,13 +119,26 @@ function CustomerRegistrationForm() {
         validationSchema,
         onSubmit: async (values, { resetForm }) => {
             try {
-                console.log("Submitted Customer Data:", values);
-                // Example: await axios.post('/api/customers', values);
-                resetForm();
+                const res = await fetch("http://localhost:3000/api/register-customer", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(values),
+                });
+
+
+                const data = await res.json();
+                if (res.ok) {
+                    alert("✅ Customer registered successfully");
+                    resetForm();
+                } else {
+                    alert("❌ Failed to register: " + data.message);
+                }
             } catch (error) {
                 console.error("Submission error:", error);
+                alert("❌ Network or server error");
             }
         },
+
     });
 
     return (

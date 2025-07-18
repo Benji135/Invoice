@@ -1,35 +1,40 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const router = express.Router();
-const User = require('../models/admin'); // Import the User model
+import express from "express";
+import jwt from "jsonwebtoken";
+import User from "../models/admin.js"; // Make sure the path and filename match, and it has ES export
 
+const router = express.Router();
 const SECRET_KEY = process.env.JWT_SECRET;
 
-router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
+router.post("/login", async (req, res) => {
+  const { username, password } = req.body;
 
-    // Find user in the database
+  try {
     const user = await User.findOne({ username });
-    // console.log(user);
+
     if (!user) {
-        console.log("User not found:");
-        return res.status(401).json({ message: 'Invalid credentials' });
+      console.log("User not found");
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // In production, use bcrypt to compare hashed passwords!
+    // NOTE: For production, use bcrypt to hash & compare passwords
     if (password !== user.password) {
-        console.log('Invalid password attempt for user');
-        return res.status(401).json({ message: 'Invalid credentials' });
-        
+      console.log("Invalid password attempt");
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const payload = {
-        userId: user._id,
-        username: user.username,
-        email: user.email
+      userId: user._id,
+      username: user.username,
+      email: user.email,
     };
-    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
-    return res.json({ token });
+
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+
+    res.json({ token });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
-module.exports = router;
+export default router;
