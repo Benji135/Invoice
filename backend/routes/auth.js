@@ -12,12 +12,15 @@ router.post('/login', async (req, res) => {
     const user = await User.findOne({ username });
     // console.log(user);
     if (!user) {
+        console.log("User not found:");
         return res.status(401).json({ message: 'Invalid credentials' });
     }
 
     // In production, use bcrypt to compare hashed passwords!
     if (password !== user.password) {
+        console.log('Invalid password attempt for user');
         return res.status(401).json({ message: 'Invalid credentials' });
+        
     }
 
     const payload = {

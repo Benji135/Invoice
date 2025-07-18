@@ -15,7 +15,7 @@ import Navbar from "./Components/Navbar.jsx";
 // Wrapper to conditionally show Navbar
 const AppWrapper = () => {
   const location = useLocation();
-  const hideNavbarRoutes = ["/", "/signup"];
+  const hideNavbarRoutes = ["/"];
   const hideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   return (
@@ -23,17 +23,66 @@ const AppWrapper = () => {
       {!hideNavbar && <Navbar />}
       <main className="flex-1 bg-gray-100 min-h-screen p-6">
         <Routes>
-          {/* Public Routes */}
+          {/* Public Route */}
           <Route path="/" element={<LoginForm />} />
-          <Route path="/signup" element={<SignupForm />} />
 
           {/* Protected Routes */}
-          <Route path="/home" element={<Home />} />
-          <Route path="/invoice" element={<InvoiceForm />} />
-          <Route path="/inventory" element={<InventoryManagement />} />
-          <Route path="/customer-reg" element={<CustomerReg />} />
-          <Route path="/customer-profile" element={<CustomerProfile />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/signup"
+            element={
+              <ProtectedRoute>
+                <SignupForm />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/invoice"
+            element={
+              <ProtectedRoute>
+                <InvoiceForm />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/inventory"
+            element={
+              <ProtectedRoute>
+                <InventoryManagement />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/customer-reg"
+            element={
+              <ProtectedRoute>
+                <CustomerReg />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/customer-profile"
+            element={
+              <ProtectedRoute>
+                <CustomerProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </main>
     </div>
@@ -47,5 +96,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;
