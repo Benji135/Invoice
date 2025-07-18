@@ -12,7 +12,7 @@ import {
 } from "react-icons/fi";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const navItems = [
   { title: "Features", icon: FiGrid, path: "/home" },
@@ -27,6 +27,13 @@ const Navbar = () => {
   const [open, setOpen] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // Sign out handler
+  const handleSignOut = () => {
+    localStorage.removeItem("token"); // Remove JWT token
+    navigate("/");
+  };
 
   return (
     <>
@@ -45,11 +52,10 @@ const Navbar = () => {
             <Link to={path} key={title}>
               <motion.div
                 layout
-                className={`relative flex h-10 w-full items-center rounded-md transition-colors ${
-                  location.pathname === path
-                    ? "bg-gray-200 text-black"
-                    : "text-slate-600 hover:bg-slate-100"
-                }`}
+                className={`relative flex h-10 w-full items-center rounded-md transition-colors ${location.pathname === path
+                  ? "bg-gray-200 text-black"
+                  : "text-slate-600 hover:bg-slate-100"
+                  }`}
               >
                 <motion.div
                   layout
@@ -74,7 +80,7 @@ const Navbar = () => {
         </div>
 
         {/* Sign Out Item */}
-        <Link to="/">
+        <button onClick={handleSignOut} className="w-full">
           <motion.div
             layout
             className="relative mt-4 flex h-10 w-full items-center rounded-md text-red-600 hover:bg-red-100 transition-colors"
@@ -97,7 +103,7 @@ const Navbar = () => {
               </motion.span>
             )}
           </motion.div>
-        </Link>
+        </button>
 
         {/* Collapse Toggle */}
         <ToggleClose open={open} setOpen={setOpen} />
@@ -129,11 +135,10 @@ const Navbar = () => {
                   key={title}
                   to={path}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors ${
-                    location.pathname === path
-                      ? "bg-gray-200 text-black"
-                      : "text-slate-600 hover:bg-slate-100"
-                  }`}
+                  className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors ${location.pathname === path
+                    ? "bg-gray-200 text-black"
+                    : "text-slate-600 hover:bg-slate-100"
+                    }`}
                 >
                   <Icon className="text-lg" />
                   <span>{title}</span>
@@ -141,14 +146,16 @@ const Navbar = () => {
               ))}
 
               {/* Mobile Sign Out */}
-              <Link
-                to="/"
-                onClick={() => setMobileMenuOpen(false)}
+              <button
+                onClick={() => {
+                  handleSignOut();
+                  setMobileMenuOpen(false);
+                }}
                 className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-red-600 hover:bg-red-100"
               >
                 <FiLogOut className="text-lg" />
                 <span>Sign Out</span>
-              </Link>
+              </button>
             </motion.div>
           </motion.div>
         )}
