@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { Link } from "react-router-dom";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const initialValues = {
     username: "",
     password: "",
@@ -14,8 +15,28 @@ const LoginForm = () => {
     password: Yup.string().required("Password is required"),
   });
 
-  const handleSubmit = (values) => {
-    console.log("Login submitted:", values);
+  const handleSubmit = async (values, { setSubmitting, setStatus }) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values),
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        // Save token to localStorage or state
+        localStorage.setItem('token', data.token);
+        setStatus({ success: 'Login successful!' });
+        navigate('/');
+        // Redirect or update UI as needed
+      } else {
+        setStatus({ error: data.message || 'Login failed' });
+      }
+    } catch (error) {
+      setStatus({ error: 'Network error' });
+    }
+    setSubmitting(false);
   };
 
   const renderInput = (name, type, placeholder) => (
