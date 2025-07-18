@@ -1,7 +1,7 @@
 // App.jsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-
+import ProtectedRoute from "./Components/ProtectedRoute";
 import LoginForm from "./Pages/Login";
 import SignupForm from "./Pages/Signup";
 import InventoryManagement from "./Pages/InventoryManagement";
