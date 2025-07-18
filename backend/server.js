@@ -10,10 +10,6 @@ app.use(express.json());
 // Connect to MongoDB
 connectDB();
 
-//this for the test only
-const testRoutes = require('./routes/test');
-app.use('/api', testRoutes);
-
 const authRoutes = require('./routes/auth');
 app.use('/api', authRoutes);
 
