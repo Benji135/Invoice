@@ -1,44 +1,65 @@
 import React from 'react';
 import Card from '../Components/Card.jsx';
+import {
+  FaFileInvoiceDollar,
+  FaUserPlus,
+  FaUserCircle,
+  FaBoxes,
+  FaIndustry,
+} from 'react-icons/fa';
 
 function Home() {
   const cards = [
     {
-      image: 'https://via.placeholder.com/150?text=VC',
-      title: 'Vice Chancellor View',
+      icon: FaFileInvoiceDollar,
+      image: '/images/invoice.jpg',
+      title: 'Create Invoice',
+      description: 'Generate and manage invoices for customers quickly and easily.',
+      path: '/invoice',
     },
     {
-      image: 'https://via.placeholder.com/150?text=Teacher',
-      title: 'Teacher Timetable',
+      icon: FaUserPlus,
+      image: '/images/clientreg.jpg',
+      title: 'Register Customer',
+      description: 'Add new customers to your system with essential details.',
+      path: '/customer-reg',
     },
     {
-      image: 'https://via.placeholder.com/150?text=Room',
-      title: 'Room Timetable',
+      icon: FaUserCircle,
+      image: '/images/clientProfile.jpg',
+      title: 'Customer Profile',
+      description: 'View and update individual customer profiles and history.',
+      path: '/customer-profile',
     },
     {
-      image: 'https://via.placeholder.com/150?text=Semester',
-      title: 'Semester Timetable',
+      icon: FaBoxes,
+      image: '/images/inventory.webp',
+      title: 'Inventory Management',
+      description: 'Keep track of your stock levels and inventory movement.',
+      path: '/inventory',
     },
     {
-      image: 'https://via.placeholder.com/150?text=Department',
-      title: 'Department Overview',
+      icon: FaIndustry,
+      image: '/images/profile.jpeg',
+      title: 'Company Profile',
+      description: 'Manage your company’s core information and branding.',
+      path: '/profile',
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-10 px-4">
-      <div className="flex flex-wrap justify-center gap-8 max-w-6xl">
-        {/* First row: 3 cards */}
-        <div className="flex gap-8 justify-center w-full mb-8">
-          {cards.slice(0, 3).map((card, index) => (
-            <Card key={index} image={card.image} title={card.title} />
-          ))}
-        </div>
-
-        {/* Second row: 2 cards */}
-        <div className="flex gap-8 justify-center w-full">
-          {cards.slice(3).map((card, index) => (
-            <Card key={index + 3} image={card.image} title={card.title} />
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center py-10">
+      <div className="flex justify-center w-full mx-5">
+        <div className="grid gap-5 w-full max-w-6xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
+          {cards.map((card, index) => (
+            <Card
+              key={index}
+              icon={card.icon}
+              image={card.image}
+              title={card.title}
+              description={card.description}
+              path={card.path}
+            />
           ))}
         </div>
       </div>
