@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const LoginForm = () => {
         // Save token to localStorage or state
         localStorage.setItem('token', data.token);
         setStatus({ success: 'Login successful!' });
-        navigate('/');
+        navigate('/home');
         // Redirect or update UI as needed
       } else {
         setStatus({ error: data.message || 'Login failed' });
