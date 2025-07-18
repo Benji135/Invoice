@@ -28,7 +28,7 @@ const LoginForm = () => {
         // Save token to localStorage or state
         localStorage.setItem('token', data.token);
         setStatus({ success: 'Login successful!' });
-        navigate('/');
+        navigate('/home');
         // Redirect or update UI as needed
       } else {
         setStatus({ error: data.message || 'Login failed' });

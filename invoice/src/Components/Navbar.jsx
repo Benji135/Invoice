@@ -18,7 +18,7 @@ const navItems = [
     { title: "Create Invoice", icon: FiDollarSign, path: "/invoice" },
     { title: "Customer Registration", icon: FiUserPlus, path: "/customer-reg" },
     { title: "Customer Profile", icon: FiUser, path: "/customer-profile" },
-    { title: "Inventory", icon: FiBox, path: "/inventory" },
+    { title: "Items", icon: FiBox, path: "/inventory" },
     { title: "Profile", icon: FiSettings, path: "/profile" },
 ];
 
