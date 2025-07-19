@@ -1,8 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const User = require("../models/admin"); // CommonJS require
+const User = require("../models/admin");
 const router = express.Router();
-
 require("dotenv").config();
 
 const SECRET_KEY = process.env.JWT_SECRET;
@@ -20,10 +19,15 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // WARNING: Replace this with bcrypt in production
+    // WARNING: Use bcrypt in production
     if (password !== user.password) {
       console.log("Invalid password attempt");
       return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    if (!SECRET_KEY) {
+      console.error("❌ JWT_SECRET is not defined");
+      return res.status(500).json({ message: "JWT secret not configured" });
     }
 
     const payload = {
@@ -32,16 +36,11 @@ router.post("/login", async (req, res) => {
       email: user.email,
     };
 
-    if (!SECRET_KEY) {
-      console.error("❌ JWT_SECRET is not defined in environment variables.");
-      return res.status(500).json({ message: "JWT secret not configured" });
-    }
-
-    // ✅ Generate and save new token (overwriting any old one)
+    // Generate new token
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
 
-    user.token = token; // Add this field in your schema
-    await user.save();
+    // ✅ Update token directly in DB without triggering full validation
+    await User.updateOne({ _id: user._id }, { token });
 
     res.json({ token });
   } catch (error) {
