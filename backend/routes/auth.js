@@ -3,13 +3,14 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/admin"); // CommonJS require
 const router = express.Router();
 
-// Load env variables (in case not loaded globally)
 require("dotenv").config();
 
 const SECRET_KEY = process.env.JWT_SECRET;
 
 router.post("/login", async (req, res) => {
+  const ip = req.ip;
   const { username, password } = req.body;
+  console.log(`Login attempt from IP: ${ip}, Username: ${username}`);
 
   try {
     const user = await User.findOne({ username });
@@ -36,7 +37,11 @@ router.post("/login", async (req, res) => {
       return res.status(500).json({ message: "JWT secret not configured" });
     }
 
+    // ✅ Generate and save new token (overwriting any old one)
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+
+    user.token = token; // Add this field in your schema
+    await user.save();
 
     res.json({ token });
   } catch (error) {
