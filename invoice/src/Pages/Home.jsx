@@ -20,7 +20,7 @@ function Home() {
     {
       icon: FaUserPlus,
       image: '/images/clientreg.jpg',
-      title: 'Register Customer',
+      title: 'Customer Registration',
       description: 'Add new customers to your system with essential details.',
       path: '/customer-reg',
     },
