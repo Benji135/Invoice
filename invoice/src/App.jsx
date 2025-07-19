@@ -8,7 +8,9 @@ import InventoryManagement from "./Pages/InventoryManagement";
 import CustomerReg from "./Pages/CustomerReg";
 import CustomerProfile from "./Pages/CustomerProfile";
 import Profile from "./Pages/Profile";
+import Invoice from "./Pages/Invoice";
 import InvoiceForm from "./Pages/InvoiceForm";
+import InvoiceHistory from "./Pages/InvoiceHistory";
 import Home from "./Pages/Home";
 import Navbar from "./Components/Navbar.jsx";
 
@@ -47,6 +49,14 @@ const AppWrapper = () => {
             path="/invoice"
             element={
               <ProtectedRoute>
+                <Invoice />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/invoice-form"
+            element={
+              <ProtectedRoute>
                 <InvoiceForm />
               </ProtectedRoute>
             }
@@ -80,6 +90,14 @@ const AppWrapper = () => {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/invoice-history"
+            element={
+              <ProtectedRoute>
+                <InvoiceHistory />
               </ProtectedRoute>
             }
           />

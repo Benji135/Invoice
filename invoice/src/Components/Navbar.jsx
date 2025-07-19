@@ -16,7 +16,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const navItems = [
   { title: "Features", icon: FiGrid, path: "/home" },
-  { title: "Create Invoice", icon: FiDollarSign, path: "/invoice" },
+  { title: "Invoice", icon: FiDollarSign, path: "/invoice" },
   { title: "Customer Registration", icon: FiUserPlus, path: "/customer-reg" },
   { title: "Customer Profile", icon: FiUser, path: "/customer-profile" },
   { title: "Items", icon: FiBox, path: "/inventory" },

@@ -13,7 +13,7 @@ function Home() {
     {
       icon: FaFileInvoiceDollar,
       image: '/images/invoice.jpg',
-      title: 'Create Invoice',
+      title: 'Invoice',
       description: 'Generate and manage invoices for customers quickly and easily.',
       path: '/invoice',
     },
